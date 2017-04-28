@@ -28,5 +28,5 @@ Struktury danych:
 
 Proponowane algorytmy:
 	(Chyba) naiwne: iterowanie po wszystkich pojemnikach; dla każdego pojemnika sprawdzamy czy jest tam więcej niż jeden klocek tego samego koloru, jeżeli tak to przenosimy wszystkie nadmiarowe do kolejnego pojemnika. Jeżeli nie, przechodzimy do sprawdzania pojemnika obok.
-	Mniej naiwne:
+	Mniej naiwne: sprawdzamy w którym pojemniku (po lewej czy po prawej) nie ma klocka o takim kolorze który danym pojemniku jest nadmiarowy i przenosimy go tam. Jeżeli w obu sąsiednich pojemnikach jest już taki klocek, sprawdzamy w kolejnych pojemnikach (lewy, prawy albo naprzemiennie) i gdy trafimy na odpowiedni pojemnik to tam go przenosimy. 
 		
