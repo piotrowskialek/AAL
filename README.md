@@ -1,0 +1,2 @@
+# AAL
+Analiza Algorytmów projekt
