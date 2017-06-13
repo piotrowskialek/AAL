@@ -20,7 +20,7 @@ class Workspace(val liczbaPojemnikow: Int, val liczbaKolorow: Int) {
 
   //liczba pojemnikow = n
   //ograniczenie pojemnosci pojemnikow -- Pi ? nie wiem jakie, zeby dzialalo
-  val ograniczeniePojemnosci = 100
+  val ograniczeniePojemnosci = 3
 
 
   var kolekcjaPojemnikow:Array[Pojemnik] =
@@ -33,46 +33,78 @@ class Workspace(val liczbaPojemnikow: Int, val liczbaKolorow: Int) {
     //jeżeli tak to przenosimy wszystkie nadmiarowe do kolejnego pojemnika
     //Jeżeli nie, przechodzimy do sprawdzania pojemnika obok
 
-  //for po pojemnikach
-    //for po klockach w pojemniku
-      //warunek if
-      //else
+
+    var buffer: ArrayBuffer[Klocek] = new ArrayBuffer[Klocek]()
 
 
     for(p: Pojemnik <- kolekcjaPojemnikow){
-      var buffer: ArrayBuffer[Klocek] = new ArrayBuffer()
 
+      val tmp = buffer.toArray
+
+      kolekcjaPojemnikow(p.id).kolekcjaKlockow = kolekcjaPojemnikow(p.id).kolekcjaKlockow ++ tmp
+
+      buffer.clear()
       //sprawdz czy jest tam wiecej niz jeden klocek tego samego koloru
 
 
-      var col = p.kolekcjaKlockow.sorted
-
-//      def same(a1: Klocek, a2: Klocek): Boolean = {
-//        a1.kolor == a2.kolor
-//      }
+      val col = p.kolekcjaKlockow.sorted
 
 
       for(i <-0 to liczbaKolorow-1){
         var tmp = col.count(k=>k.kolor==i)
         if(tmp>1){
 
+          p.kolekcjaKlockow = p.kolekcjaKlockow.filter(k=>k.kolor!=i) :+ new Klocek(i)
+
+          //dodac tmp-1 elementow do bufora
+
+          buffer.appendAll(List.fill(tmp-1)(new Klocek(i)))
+        }
+      }
+
+    }
+
+  }
+
+  def alg2(): Unit = {
+    //iteruj po wszystkich pojemnikach
+    //dla każdego pojemnika sprawdzamy czy jest tam więcej niż jeden klocek tego samego koloru
+    //jeżeli tak to przenosimy wszystkie nadmiarowe do kolejnego pojemnika
+    //Jeżeli nie, przechodzimy do sprawdzania pojemnika obok
+
+
+    var buffer: ArrayBuffer[Klocek] = new ArrayBuffer[Klocek]()
+
+
+    for(p: Pojemnik <- kolekcjaPojemnikow){
+
+      val tmp = buffer.toArray
+
+      kolekcjaPojemnikow(p.id).kolekcjaKlockow = kolekcjaPojemnikow(p.id).kolekcjaKlockow ++ tmp
+
+      buffer.clear()
+      //sprawdz czy jest tam wiecej niz jeden klocek tego samego koloru
+
+
+      val col = p.kolekcjaKlockow.sorted
+
+
+      for(i <-0 to liczbaKolorow-1){
+        var tmp = col.count(k=>k.kolor==i)
+        if(tmp>1){
 
           p.kolekcjaKlockow = p.kolekcjaKlockow.filter(k=>k.kolor!=i) :+ new Klocek(i)
 
           //dodac tmp-1 elementow do bufora
 
           buffer.appendAll(List.fill(tmp-1)(new Klocek(i)))
-
-
         }
       }
-
-
-
 
     }
 
   }
+
 
   def checkQuantity(kolor: Int): Int = {
 
@@ -87,7 +119,10 @@ class Workspace(val liczbaPojemnikow: Int, val liczbaKolorow: Int) {
 
 
   def randP(modulo: Int): Int= {
-    new Random().nextInt(Int.MaxValue) % modulo
+    var result = new Random().nextInt(Int.MaxValue) % modulo
+    while(result==0)
+      result = new Random().nextInt(Int.MaxValue) % modulo
+    return result
   }
 
   def printWorkspace(): Unit = {

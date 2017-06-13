@@ -10,7 +10,7 @@ object Main extends App {
   //4. ŁĄCZNIE WE WSZYSTKICH POJEMNIKACH JEST NIE WIĘCEJ NIŻ N KLOCKÓW W JEDNYM KOLORZE
 
   val n = 4
-  val k = 6
+  val k = 2
 
   val workspace = new Workspace(n,k)
 
@@ -18,5 +18,7 @@ object Main extends App {
 
   workspace.alg1()
 
-  println(workspace.checkQuantity(5))
+  workspace.printWorkspace()
+
+//  println(workspace.checkQuantity(5))
 }

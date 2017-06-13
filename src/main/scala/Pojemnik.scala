@@ -6,7 +6,7 @@ import scala.util.Random
 
 object Pojemnik {
   val liczbaKolorow: Int = Workspace.liczbaKolorow //k kolorow
-  private var id:Int = 1
+  private var id: Int = 0 //bylo 1
   private def increment(): Unit = {
     id+=1
   }
