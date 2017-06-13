@@ -13,15 +13,26 @@ object Pojemnik {
 }
 
 
-class Pojemnik(val pojemnosc:Int){
+class Pojemnik(val pojemnosc:Int, val workspace: Workspace){
 
   val id: Int = Pojemnik.id
   Pojemnik.increment()
 
-  var kolekcjaKlockow: Array[Klocek] = Array.fill(pojemnosc)(new Klocek(randK(Pojemnik.liczbaKolorow)))
 
 
-  def randK(modulo: Int): Int= {
+  var kolekcjaKlockow: Array[Klocek] = Array.fill(pojemnosc)(new Klocek(choseColor()))
+
+  //trzeba zrobic zeby w workspace nie bylo wiecej niz n klockow o jednym kolorze
+
+
+  def choseColor(): Int = { //moge tak zrobic bo bo budowania workspace moze trwac nieskonczonosc
+    var r = randK(Pojemnik.liczbaKolorow)
+    while(workspace.checkQuantity(r)==Pojemnik.liczbaKolorow)
+      r = randK(Pojemnik.liczbaKolorow)
+    return r
+  }
+
+  def randK(modulo: Int): Int = {
     new Random().nextInt(Int.MaxValue)%modulo
   }
 

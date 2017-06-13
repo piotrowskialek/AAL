@@ -6,6 +6,7 @@ import scala.util.Random
 
 object Workspace{
   var liczbaKolorow:Int=0
+
 }
 
 class Workspace(val liczbaPojemnikow: Int, val liczbaKolorow: Int) {
@@ -21,13 +22,24 @@ class Workspace(val liczbaPojemnikow: Int, val liczbaKolorow: Int) {
   val ograniczeniePojemnosci = 100
 
 
-
   var kolekcjaPojemnikow:Array[Pojemnik] =
-    Array.fill(liczbaPojemnikow)(new Pojemnik(randP(ograniczeniePojemnosci)))
+  Array.fill(liczbaPojemnikow)(new Pojemnik(randP(ograniczeniePojemnosci),this))
 
+
+
+  def checkQuantity(kolor: Int): Int = {
+
+    if(kolekcjaPojemnikow!=null) {
+      kolekcjaPojemnikow
+        .filter(p => p != null)
+        .flatMap(p => p.kolekcjaKlockow)
+        .count(k => k.kolor == kolor)
+    } else
+        return 0;
+  }
 
   def randP(modulo: Int): Int= {
-    new Random().nextInt(Int.MaxValue)%modulo
+    new Random().nextInt(Int.MaxValue) % modulo
   }
 
   def printWorkspace(): Unit = {
