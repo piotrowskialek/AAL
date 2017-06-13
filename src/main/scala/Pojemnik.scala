@@ -20,7 +20,7 @@ class Pojemnik(val pojemnosc:Int, val workspace: Workspace){
 
 
 
-  var kolekcjaKlockow: Array[Klocek] = Array.fill(pojemnosc)(new Klocek(choseColor()))
+  var kolekcjaKlockow: Array[Klocek] = Array.fill(new Random().nextInt(Int.MaxValue)%pojemnosc)(new Klocek(choseColor()))
 
   //trzeba zrobic zeby w workspace nie bylo wiecej niz n klockow o jednym kolorze
 
@@ -38,7 +38,8 @@ class Pojemnik(val pojemnosc:Int, val workspace: Workspace){
 
   def printKlocki(): Unit = {
     println("Id pojemnika:" + id)
-    println("Ilosc klockow:"+pojemnosc)
+    println("Pojemnosc:"+pojemnosc)
+    println("Ilosc klockow aktualnie:"+kolekcjaKlockow.length)
     kolekcjaKlockow.foreach(println)
     println()
   }
