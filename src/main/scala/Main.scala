@@ -12,6 +12,19 @@ object Main extends App {
   //3. WE WSZYSTKICH POJEMNIKACH SA KLOCKI W K KOLORACH -- kolor to int
   //4. ŁĄCZNIE WE WSZYSTKICH POJEMNIKACH JEST NIE WIĘCEJ NIŻ N KLOCKÓW W JEDNYM KOLORZE
 
+  //1
+  //ustalona liczba kolorow i wsp wypelnienia
+  //zwiekszajaca sie liczba pojemnikow
+
+
+  //2
+  //ustalony rozmiar problemu, zwiekszamy k
+
+
+  //3
+  //zwiekszajac liczbe klockow zwiekszamy liczbe kolorow k
+  //przeszacowanie mozliwe
+
   val n = 8
   val k = 10
 

@@ -8,16 +8,15 @@ import util.control.Breaks._
   * Created by apiotrowski on 08.06.2017.
   */
 
-object Workspace{
-  var liczbaKolorow:Int=0
+object Workspace {
+  var liczbaKolorow: Int = 0
 }
 
 class Workspace(val liczbaPojemnikow: Int, val liczbaKolorow: Int) {
 
   //liczba kolorow = k
   //zmienna z maina
-  Workspace.liczbaKolorow=liczbaKolorow
-
+  Workspace.liczbaKolorow = liczbaKolorow
 
 
   //liczba pojemnikow = n
@@ -25,8 +24,8 @@ class Workspace(val liczbaPojemnikow: Int, val liczbaKolorow: Int) {
   val ograniczeniePojemnosci = 20
 
 
-  var kolekcjaPojemnikow:Array[Pojemnik] =
-  Array.fill(liczbaPojemnikow)(new Pojemnik(randP(ograniczeniePojemnosci),this))
+  var kolekcjaPojemnikow: Array[Pojemnik] =
+    Array.fill(liczbaPojemnikow)(new Pojemnik(randP(ograniczeniePojemnosci), this))
 
 
   def alg1(): Boolean = {
@@ -39,7 +38,7 @@ class Workspace(val liczbaPojemnikow: Int, val liczbaKolorow: Int) {
     var buffer: ArrayBuffer[Klocek] = new ArrayBuffer[Klocek]()
     var failCounter: Int = 0
 
-    for(p: Pojemnik <- kolekcjaPojemnikow){
+    for (p: Pojemnik <- kolekcjaPojemnikow) {
 
       val tmp = buffer.toArray
 
@@ -52,23 +51,23 @@ class Workspace(val liczbaPojemnikow: Int, val liczbaKolorow: Int) {
       val col = p.kolekcjaKlockow.sorted
 
 
-      for(i <-0 to liczbaKolorow-1){
-        var tmp = col.count(k=>k.kolor==i)
-        if(tmp>1){
+      for (i <- 0 to liczbaKolorow - 1) {
+        var tmp = col.count(k => k.kolor == i)
+        if (tmp > 1) {
 
-          p.kolekcjaKlockow = p.kolekcjaKlockow.filter(k=>k.kolor!=i) :+ new Klocek(i)
+          p.kolekcjaKlockow = p.kolekcjaKlockow.filter(k => k.kolor != i) :+ new Klocek(i)
 
           //dodac tmp-1 elementow do bufora
 
-          buffer.appendAll(List.fill(tmp-1)(new Klocek(i)))
+          buffer.appendAll(List.fill(tmp - 1)(new Klocek(i)))
         }
       }
 
-      if(p.id == liczbaPojemnikow-1){
+      if (p.id == liczbaPojemnikow - 1) {
         val bufferArray = buffer.toArray
         kolekcjaPojemnikow(0).kolekcjaKlockow = kolekcjaPojemnikow(0).kolekcjaKlockow ++ bufferArray
-        if(bufferArray.length>0) {
-          failCounter+=1
+        if (bufferArray.length > 0) {
+          failCounter += 1
           return false
         }
         else
@@ -89,37 +88,32 @@ class Workspace(val liczbaPojemnikow: Int, val liczbaKolorow: Int) {
     var buffer: ArrayBuffer[Klocek] = new ArrayBuffer[Klocek]()
 
 
-    for(p: Pojemnik <- kolekcjaPojemnikow){
+    for (p: Pojemnik <- kolekcjaPojemnikow) {
 
       val tmp = buffer.toArray
 
-//      if(kolekcjaPojemnikow(p.id+1).kolekcjaKlockow()){
-//
-//      }
-
-
       //sprawdz po lewo i prawo
-      //if(kolekcjaPojemnikow(p.id).kolekcjaKlockow   )
-    for(j <- 1 to liczbaPojemnikow) {
-      for (it <- buffer) {
 
-        breakable {
+      for (j <- 1 to liczbaPojemnikow/2 + 1) {
+        for (it <- buffer) {
+
+          breakable {
 
             if (!kolekcjaPojemnikow(p.id + j).kolekcjaKlockow.contains(it)) {
-            kolekcjaPojemnikow(p.id + j).kolekcjaKlockow :+= it
-            buffer -= it
-            break()
-          } //sprawdz w lewo i prawo
+              kolekcjaPojemnikow(p.id + j).kolekcjaKlockow :+= it
+              buffer -= it
+              break()
+            } //sprawdz w lewo i prawo
 
-          if (!kolekcjaPojemnikow(p.id - j).kolekcjaKlockow.contains(it)) {
-            kolekcjaPojemnikow(p.id - j).kolekcjaKlockow :+= it
-            buffer -= it
-            break()
+            if (!kolekcjaPojemnikow(p.id - j).kolekcjaKlockow.contains(it)) {
+              kolekcjaPojemnikow(p.id - j).kolekcjaKlockow :+= it
+              buffer -= it
+              break()
+            }
           }
         }
-      }
 
-    }
+      }
       kolekcjaPojemnikow(p.id).kolekcjaKlockow = kolekcjaPojemnikow(p.id).kolekcjaKlockow ++ tmp
 
       buffer.clear()
@@ -129,20 +123,20 @@ class Workspace(val liczbaPojemnikow: Int, val liczbaKolorow: Int) {
       val col = p.kolekcjaKlockow.sorted
 
 
-      for(i <-0 to liczbaKolorow-1){
-        var tmp = col.count(k=>k.kolor==i)
-        if(tmp>1){
+      for (i <- 0 to liczbaKolorow - 1) {
+        var tmp = col.count(k => k.kolor == i)
+        if (tmp > 1) {
 
-          p.kolekcjaKlockow = p.kolekcjaKlockow.filter(k=>k.kolor!=i) :+ new Klocek(i)
+          p.kolekcjaKlockow = p.kolekcjaKlockow.filter(k => k.kolor != i) :+ new Klocek(i)
 
           //dodac tmp-1 elementow do bufora
 
-          buffer.appendAll(List.fill(tmp-1)(new Klocek(i)))
+          buffer.appendAll(List.fill(tmp - 1)(new Klocek(i)))
         }
       }
 
       //jezeli ostatni, przerzuc do pierwszego
-      if(p.id == liczbaPojemnikow-1){
+      if (p.id == liczbaPojemnikow - 1) {
         val bufferArray = buffer.toArray
         kolekcjaPojemnikow(0).kolekcjaKlockow = kolekcjaPojemnikow(0).kolekcjaKlockow ++ bufferArray
 
@@ -153,33 +147,33 @@ class Workspace(val liczbaPojemnikow: Int, val liczbaKolorow: Int) {
 
   def checkQuantity(kolor: Int): Int = {
 
-    if(kolekcjaPojemnikow!=null) {
+    if (kolekcjaPojemnikow != null) {
       kolekcjaPojemnikow
         .filter(p => p != null)
         .flatMap(p => p.kolekcjaKlockow)
         .count(k => k.kolor == kolor)
     } else
-    return 0;
+      return 0;
   }
 
   def printSum(): Int = {
     var result: Int = 0
-    for(i <- 0 to liczbaKolorow){
-      result+=checkQuantity(i)
+    for (i <- 0 to liczbaKolorow) {
+      result += checkQuantity(i)
     }
-      result
+    result
   }
 
 
-  def randP(modulo: Int): Int= {
+  def randP(modulo: Int): Int = {
     var result = new Random().nextInt(Int.MaxValue) % modulo
-    while(result==0)
+    while (result == 0)
       result = new Random().nextInt(Int.MaxValue) % modulo
     return result
   }
 
   def printWorkspace(): Unit = {
-    println("Ilosc pojemnikow:"+kolekcjaPojemnikow.length)
+    println("Ilosc pojemnikow:" + kolekcjaPojemnikow.length)
     kolekcjaPojemnikow.foreach(p => p.printKlocki())
     println()
   }
